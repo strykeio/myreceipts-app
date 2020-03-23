@@ -1,0 +1,101 @@
+<html class="no-js" lang="">
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />    
+    <meta name="description" content="Save your receipts quickly!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />    
+    <link rel="stylesheet" href="css/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script src="https://kit.fontawesome.com/44ddfb7474.js" crossorigin="anonymous"></script>    
+    <script src="js/vendor/moment.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <script src="js/stryke.js"></script>
+    <script src="js/routing.js"></script>    
+  </head>
+  <body>    
+    <div class="row login-wrap">
+      <div class="col-sm-2 col-md-4 h-10">        
+      </div>    
+      <div class="col-md-4 my-auto">
+        <div class="card card-block">
+          <div class="row card-header">
+            <h2 class="title col-12">New Receipt <i id="logout" class="fas fa-power-off"></i></h2>                                
+          </div>
+          <div class="card-body">
+            <div>
+              <p class="infoText">
+                Enter your receipt's amount. Date and time are defaulted to right now. Everything else is optional.
+              </p>
+            </div>
+            <form class="inputForm">
+              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">€</span>
+                </div>
+                <input id="amount" type="number" placeholder="amount" class="form-control" aria-label="Amount">                
+              </div>
+              <div class="input-group mb-3">                
+                <textarea id="notes" placeholder="notes..." rows="3" class="form-control notes" aria-label="Notes"></textarea>             
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-clock"></i></span>                  
+                </div>
+                <input id="datetime" type="text" placeholder="date and time" class="form-control" aria-label="Date">                
+              </div>             
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-archive"></i></span> 
+                </div>
+                <select id="type" class="custom-select">                  
+                  <option value="none">no type - default</option>                  
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-building"></i></span>                   
+                </div>
+                <select id="business" class="custom-select">                  
+                  <option value="none">no business - default</option>                  
+                </select>
+              </div>
+              
+
+              <div class="saveBtnHolder">
+                <button id="save" class="saveBtn btn btn-success" type="button">                
+                  Save
+                </button>
+              </div>  
+                                        
+              <div class="saveBtnHolder">
+                <p id="feedback"></p>
+              </div>  
+            </form>
+          </div>
+          <div class="col-sm-4 h-10">        
+          </div>    
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>
+      window.jQuery ||
+        document.write(
+          '<script src="js/vendor/jquery-1.12.0.min.js"><\/script>'
+        );
+    </script>
+    <script src="js/main.js"></script>   
+  </body>
+</html>

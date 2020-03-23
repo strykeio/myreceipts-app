@@ -1,0 +1,162 @@
+<html class="">
+
+  <head>
+    <title>Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: white;
+        color: black;
+        max-width: 800px;
+      }
+
+      .topSectionContent {
+        margin: 10px;
+        margin-right: 15px;
+        font-size: 14px;
+      }
+
+      .panel {
+        background-color: #232A30;
+        color: white;
+      }
+
+      .rowHead {
+        background-color: #232A30;
+        color: white;
+        padding: 7px;
+      }
+
+      .greenyellow {
+        color: greenyellow;
+        background-color: greenyellow;
+      }
+
+      .purple {
+        color: purple;
+        background-color: purple;
+      }
+
+      .green {
+        color: green;
+        background-color: green;
+      }
+
+      .red {
+        color: red;
+        background-color: red;
+      }
+
+      .lightblue {
+        color: lightblue;
+        background-color: lightblue;
+      }
+
+      .blue {
+        color: blue;
+        background-color: blue;
+      }
+
+      .orange {
+        color: orange;
+        background-color: orange;
+      }
+
+      .yellow {
+        color: yellow;
+        background-color: yellow;
+      }
+
+      th {
+        background-color: #232A30;
+        color: white;
+        padding: 7px;
+        font-size: 14px;
+      }
+
+      td {
+        padding: 7px;
+        font-size: 11px;
+      }
+
+      .chart {
+        font-size: 12px;
+        padding-top: 30px;
+        padding-bottom: 20px;
+      }
+
+      .total-row {
+        padding-top: 10px;
+      }
+
+      .noReceipts {
+        padding-top: 120px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <div class="rowHead row">
+        <div class="col-6">
+          Receipts Report
+        </div>
+        <div class="col-6 text-right">
+          <span style="font-size:12px">
+            <strong>From:</strong> {{startDate}} <strong>To:</strong> {{endDate}}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {{^hasData}}
+      <div class="noReceipts text-center">
+        <h3>No receipts found for this period.</h3>
+      </div>
+    {{/hasData}}
+    {{#hasData}}
+      <div>
+        <div class="chart container">
+          {{#types}}
+            <div class="row">
+              <div class="col-3">{{title}}</div>
+              <div class="col-7">{{#bars}}<span class="{{typeColor}}">_____</span>{{/bars}}</div>
+              <div class="col-1">{{subtotal}}</div>
+            </div>
+          {{/types}}
+          <div class="total-row row">
+            <div class="col-3 font-weight-bold">Total</div>
+            <div class="col-7"></div>
+            <div class="col-1 font-weight-bold">{{total}}</div>
+          </div>
+        </div>
+
+        <div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Receipt</th>
+                <th style="width:15%">Type</th>
+                <th style="width:15%">Business</th>
+                <th style="width:20%">Date</th>
+                <th style="width:10%">Amount</th>
+              </tr>
+            </thead>
+            <tbody>{{#receipts}}
+                <tr>
+                  <td style="width:20%">{{alias}}</td>
+                  <td style="width:15%">{{#type}}<span class="{{typeColor}}">__</span> {{type}} {{/type}}</td>
+                  <td style="width:15%">{{business}}</td>
+                  <td style="width:20%">{{date}}</td>
+                  <td style="width:10%">{{amount}}</td>
+                </tr>
+              {{/receipts}}</tbody>
+          </table>
+        </div>
+      </div>
+
+    {{/hasData}}
+  </body>
+
+</html>

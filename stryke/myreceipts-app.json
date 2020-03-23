@@ -1,0 +1,393 @@
+{
+    "actions": {
+        "businessBeforeCreate": {
+            "actionDescription": "Sets the alias of a business record when it is created using the name field.",
+            "actionLabel": "Business Before Create Trigger",
+            "actionName": "businessBeforeCreate",
+            "entityMetadataDefinitionName": "business",
+            "returnType": "object",
+            "scriptDefinitionName": "businessBeforeCreate",
+            "templateDefinitionName": null,
+            "type": "beforeCreate"
+        },
+        "generate": {
+            "actionDescription": "Generates a report that lists receipts in a time period specified by the report's start and end dates. ",
+            "actionLabel": "Generate Report",
+            "actionName": "generate",
+            "entityMetadataDefinitionName": "report",
+            "returnType": "html",
+            "scriptDefinitionName": "generate",
+            "templateDefinitionName": "reportTemplate",
+            "type": "buttonAction"
+        },
+        "typeBeforeCreate": {
+            "actionDescription": "Sets the alias of a type record when it is created using the name field.",
+            "actionLabel": "Type Before Create Trigger",
+            "actionName": "typeBeforeCreate",
+            "entityMetadataDefinitionName": "type",
+            "returnType": "object",
+            "scriptDefinitionName": "typeBeforeCreate",
+            "templateDefinitionName": null,
+            "type": "beforeCreate"
+        },
+        "validateReceipt": {
+            "actionDescription": "Validates that the receipt record being created",
+            "actionLabel": "Validate Receipt",
+            "actionName": "validateReceipt",
+            "entityMetadataDefinitionName": "receipt",
+            "returnType": "object",
+            "scriptDefinitionName": "validateReceipt",
+            "templateDefinitionName": null,
+            "type": "beforeCreate"
+        }
+    },
+    "appInstanceDefinition": {
+        "description": "A receipts tracker to simplify your life! Save your receipts, categorise them and generate reports.",
+        "name": "myreceipts",
+        "title": "My Receipts"
+    },
+    "entityMetadataDefinition": {
+        "business": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "A business that issues receipts",
+            "entityColor": "#9386c4",
+            "entityIcon": "building",
+            "entityName": "business",
+            "fields": [
+                {
+                    "name": "name",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "label": "Tax Id",
+                    "name": "taxId",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "label": "Address street",
+                    "name": "addressStreet",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "label": "Address city",
+                    "name": "addressCity",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "label": "Address postal code",
+                    "name": "addressPostCode",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "label": "Address country",
+                    "name": "addressCountry",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "public": false,
+            "title": "Business"
+        },
+        "receipt": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "A receipt",
+            "entityColor": "#83c97d",
+            "entityIcon": "receipt",
+            "entityName": "receipt",
+            "fields": [
+                {
+                    "label": "date",
+                    "name": "receiptDate",
+                    "required": true,
+                    "type": "date-time"
+                },
+                {
+                    "name": "business",
+                    "relatedTo": "business",
+                    "required": false,
+                    "type": "lookup"
+                },
+                {
+                    "name": "type",
+                    "relatedTo": "type",
+                    "required": false,
+                    "type": "lookup"
+                },
+                {
+                    "name": "amount",
+                    "required": true,
+                    "type": "number"
+                },
+                {
+                    "label": "is invoice",
+                    "name": "isInvoice",
+                    "required": false,
+                    "type": "boolean"
+                },
+                {
+                    "name": "description",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "public": false,
+            "title": "Receipts"
+        },
+        "report": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "A report to summarise your receipts over a period of time",
+            "entityColor": "#BD7CB4",
+            "entityIcon": "chart-pie",
+            "entityName": "report",
+            "fields": [
+                {
+                    "label": "report start date",
+                    "name": "startdate",
+                    "required": true,
+                    "type": "date-time"
+                },
+                {
+                    "label": "report end date",
+                    "name": "enddate",
+                    "required": true,
+                    "type": "date-time"
+                },
+                {
+                    "label": "report total",
+                    "name": "total",
+                    "required": false,
+                    "type": "number"
+                }
+            ],
+            "public": false,
+            "title": "Report"
+        },
+        "type": {
+            "alias": {
+                "pattern": "[$]-{00000}"
+            },
+            "description": "The type of receipt",
+            "entityColor": "#51bddb",
+            "entityIcon": "archive",
+            "entityName": "type",
+            "fields": [
+                {
+                    "name": "name",
+                    "required": false,
+                    "type": "string"
+                },
+                {
+                    "description": "the name of the color representing this type",
+                    "name": "color",
+                    "required": false,
+                    "type": "string"
+                }
+            ],
+            "public": false,
+            "title": "Type"
+        }
+    },
+    "htmlTemplates": {
+        "reportTemplate": {
+            "templateName": "reportTemplate",
+            "templateSource": "PGh0bWwgY2xhc3M9IiI+PGhlYWQ+PHRpdGxlPlJlcG9ydDwvdGl0bGU+PGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL3N0YWNrcGF0aC5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC80LjQuMS9jc3MvYm9vdHN0cmFwLm1pbi5jc3MiIC8+PHN0eWxlPgogICAgICBib2R5IHsKICAgICAgICBmb250LWZhbWlseTogQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjsKICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTsKICAgICAgICBjb2xvcjogYmxhY2s7CiAgICAgICAgbWF4LXdpZHRoOiA4MDBweDsKICAgICAgfQoKICAgICAgLnRvcFNlY3Rpb25Db250ZW50IHsKICAgICAgICBtYXJnaW46IDEwcHg7CiAgICAgICAgbWFyZ2luLXJpZ2h0OiAxNXB4OwogICAgICAgIGZvbnQtc2l6ZTogMTRweDsKICAgICAgfQoKICAgICAgLnBhbmVsIHsKICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjMyQTMwOwogICAgICAgIGNvbG9yOiB3aGl0ZTsKICAgICAgfQoKICAgICAgLnJvd0hlYWQgewogICAgICAgIGJhY2tncm91bmQtY29sb3I6ICMyMzJBMzA7CiAgICAgICAgY29sb3I6IHdoaXRlOwogICAgICAgIHBhZGRpbmc6IDdweDsKICAgICAgfQoKICAgICAgLmdyZWVueWVsbG93IHsKICAgICAgICBjb2xvcjogZ3JlZW55ZWxsb3c7CiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogZ3JlZW55ZWxsb3c7CiAgICAgIH0KCiAgICAgIC5wdXJwbGUgewogICAgICAgIGNvbG9yOiBwdXJwbGU7CiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogcHVycGxlOwogICAgICB9CgogICAgICAuZ3JlZW4gewogICAgICAgIGNvbG9yOiBncmVlbjsKICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBncmVlbjsKICAgICAgfQoKICAgICAgLnJlZCB7CiAgICAgICAgY29sb3I6IHJlZDsKICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZWQ7CiAgICAgIH0KCiAgICAgIC5saWdodGJsdWUgewogICAgICAgIGNvbG9yOiBsaWdodGJsdWU7CiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRibHVlOwogICAgICB9CgogICAgICAuYmx1ZSB7CiAgICAgICAgY29sb3I6IGJsdWU7CiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogYmx1ZTsKICAgICAgfQoKICAgICAgLm9yYW5nZSB7CiAgICAgICAgY29sb3I6IG9yYW5nZTsKICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBvcmFuZ2U7CiAgICAgIH0KCiAgICAgIC55ZWxsb3cgewogICAgICAgIGNvbG9yOiB5ZWxsb3c7CiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogeWVsbG93OwogICAgICB9CgogICAgICB0aCB7CiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzIzMkEzMDsKICAgICAgICBjb2xvcjogd2hpdGU7CiAgICAgICAgcGFkZGluZzogN3B4OwogICAgICAgIGZvbnQtc2l6ZTogMTRweDsKICAgICAgfQoKICAgICAgdGQgewogICAgICAgIHBhZGRpbmc6IDdweDsKICAgICAgICBmb250LXNpemU6IDExcHg7CiAgICAgIH0KCiAgICAgIC5jaGFydCB7CiAgICAgICAgZm9udC1zaXplOiAxMnB4OwogICAgICAgIHBhZGRpbmctdG9wOiAzMHB4OwogICAgICAgIHBhZGRpbmctYm90dG9tOiAyMHB4OwogICAgICB9CgogICAgICAudG90YWwtcm93IHsKICAgICAgICBwYWRkaW5nLXRvcDogMTBweDsKICAgICAgfQoKICAgICAgLm5vUmVjZWlwdHMgewogICAgICAgIHBhZGRpbmctdG9wOiAxMjBweDsKICAgICAgfQogICAgPC9zdHlsZT48L2hlYWQ+PGJvZHk+CiAgICA8ZGl2PgogICAgICA8ZGl2IGNsYXNzPSJyb3dIZWFkIHJvdyI+CiAgICAgICAgPGRpdiBjbGFzcz0iY29sLTYiPgogICAgICAgICAgUmVjZWlwdHMgUmVwb3J0CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0iY29sLTYgdGV4dC1yaWdodCI+CiAgICAgICAgICA8c3BhbiBzdHlsZT0iZm9udC1zaXplOjEycHgiPgogICAgICAgICAgICA8c3Ryb25nPkZyb206PC9zdHJvbmc+IHt7c3RhcnREYXRlfX0gPHN0cm9uZz5Ubzo8L3N0cm9uZz4ge3tlbmREYXRlfX0KICAgICAgICAgIDwvc3Bhbj4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KCiAgICB7e15oYXNEYXRhfX0KICAgICAgPGRpdiBjbGFzcz0ibm9SZWNlaXB0cyB0ZXh0LWNlbnRlciI+CiAgICAgICAgPGgzPk5vIHJlY2VpcHRzIGZvdW5kIGZvciB0aGlzIHBlcmlvZC48L2gzPgogICAgICA8L2Rpdj4KICAgIHt7L2hhc0RhdGF9fQogICAge3sjaGFzRGF0YX19CiAgICAgIDxkaXY+CiAgICAgICAgPGRpdiBjbGFzcz0iY2hhcnQgY29udGFpbmVyIj4KICAgICAgICAgIHt7I3R5cGVzfX0KICAgICAgICAgICAgPGRpdiBjbGFzcz0icm93Ij4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJjb2wtMyI+e3t0aXRsZX19PC9kaXY+CiAgICAgICAgICAgICAgPGRpdiBjbGFzcz0iY29sLTciPnt7I2JhcnN9fTxzcGFuIGNsYXNzPSJ7e3R5cGVDb2xvcn19Ij5fX19fXzwvc3Bhbj57ey9iYXJzfX08L2Rpdj4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJjb2wtMSI+e3tzdWJ0b3RhbH19PC9kaXY+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAge3svdHlwZXN9fQogICAgICAgICAgPGRpdiBjbGFzcz0idG90YWwtcm93IHJvdyI+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImNvbC0zIGZvbnQtd2VpZ2h0LWJvbGQiPlRvdGFsPC9kaXY+CiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImNvbC03Ij48L2Rpdj4KICAgICAgICAgICAgPGRpdiBjbGFzcz0iY29sLTEgZm9udC13ZWlnaHQtYm9sZCI+e3t0b3RhbH19PC9kaXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICA8L2Rpdj4KCiAgICAgICAgPGRpdj4KICAgICAgICAgIDx0YWJsZSBjbGFzcz0idGFibGUgdGFibGUtc3RyaXBlZCI+PHRoZWFkPjx0cj48dGggc3R5bGU9IndpZHRoOjIwJSI+UmVjZWlwdDwvdGg+PHRoIHN0eWxlPSJ3aWR0aDoxNSUiPlR5cGU8L3RoPjx0aCBzdHlsZT0id2lkdGg6MTUlIj5CdXNpbmVzczwvdGg+PHRoIHN0eWxlPSJ3aWR0aDoyMCUiPkRhdGU8L3RoPjx0aCBzdHlsZT0id2lkdGg6MTAlIj5BbW91bnQ8L3RoPjwvdHI+PC90aGVhZD48dGJvZHk+e3sjcmVjZWlwdHN9fTx0cj48dGQgc3R5bGU9IndpZHRoOjIwJSI+e3thbGlhc319PC90ZD48dGQgc3R5bGU9IndpZHRoOjE1JSI+e3sjdHlwZX19PHNwYW4gY2xhc3M9Int7dHlwZUNvbG9yfX0iPl9fPC9zcGFuPiB7e3R5cGV9fSB7ey90eXBlfX08L3RkPjx0ZCBzdHlsZT0id2lkdGg6MTUlIj57e2J1c2luZXNzfX08L3RkPjx0ZCBzdHlsZT0id2lkdGg6MjAlIj57e2RhdGV9fTwvdGQ+PHRkIHN0eWxlPSJ3aWR0aDoxMCUiPnt7YW1vdW50fX08L3RkPjwvdHI+e3svcmVjZWlwdHN9fTwvdGJvZHk+PC90YWJsZT4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CgogICAge3svaGFzRGF0YX19CiAgPC9ib2R5PjwvaHRtbD4="
+        }
+    },
+    "resourcesAccess": [
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "receipt",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "receipt",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "type",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        },
+        {
+            "how": "viewAllEditAll",
+            "type": "roleMetadata",
+            "whatName": "type",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewAllEditAll",
+            "type": "roleMetadata",
+            "whatName": "business",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "business",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        },
+        {
+            "how": "viewAllEditAll",
+            "type": "roleMetadata",
+            "whatName": "report",
+            "whatType": null,
+            "whoName": "admin",
+            "whoType": null
+        },
+        {
+            "how": "viewMineEditMine",
+            "type": "roleMetadata",
+            "whatName": "report",
+            "whatType": null,
+            "whoName": "user",
+            "whoType": null
+        }
+    ],
+    "scripts": {
+        "businessBeforeCreate": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordBefore",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordBefore",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordAfter",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordAfter",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "businessBeforeCreate",
+            "scriptResultDefinition": {
+                "returnType": "object",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIEJ1c2luZXNzIGJlZm9yZSBjcmVhdGUgdHJpZ2dlci4KICogLSBzZXRzIGFsaWFzIHRvIHVwcGVyY2FzZSBuYW1lIHdpdGggbm8gd2hpdGVzcGFjZXMKICovCi8vIGNyZWF0ZSBhIGNvcHkgb2YgdGhlIHJlY29yZCBzbyB0aGF0IGl0IGNhbiBiZSBtb2RpZmllZCBkaXJlY3RseS4gCmxldCBuZXdCdXNpbmVzcyA9IEpTT04ucGFyc2UoSlNPTi5zdHJpbmdpZnkoc3RyeWtlLmRhdGEucmVjb3JkQWZ0ZXIpKTsKCm5ld0J1c2luZXNzLmFsaWFzID0gbmV3QnVzaW5lc3MubmFtZS50b1VwcGVyQ2FzZSgpLnJlcGxhY2UoL1xzL2csJycpOwoKc3RyeWtlLnJlc29sdmUobmV3QnVzaW5lc3MpOwo="
+        },
+        "generate": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordInContext",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordInContext",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "generate",
+            "scriptResultDefinition": {
+                "returnType": "object",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIEdlbmVyYXRlcyB0aGUgZGF0YSBmb3IgYSByZXBvcnQgdGhhdCBsaXN0cyBhbGwgcmVjZWlwdHMgaW4gYSBzcGVjaWZpYyB0aW1lIHBlcmlvZC4gCiAqIFRoZSBzdGFydCBhbmQgZW5kIGRhdGVzIG9mIHRoZSByZXBvcnQgYXJlIGZpZWxkcyBvZiB0aGUgcmVwb3J0IHJlY29yZCBpdHNlbGYuCiAqIFRoZSBkYXRhIGdlbmVyYXRlZCBieSB0aGlzIHJlcG9ydCBpcyByZW5kZXJlZCB1c2luZyB0aGUgcmVwb3J0VGVtcGxhdGUuaHRtbC4KICogVGhlIHJlcG9ydCB0ZW1wbGF0ZSBkcmF3cyBhIHZlcnkgc2ltcGxlIGJhciBjaGFydCB1c2luZyBDU1MuIFRoaXMgc2NyaXB0CiAqIGFsc28gcHJlcGFyZXMgdGhlIHZhbHVlcyBuZWVkZWQgZm9yIHRoYXQgY2hhcnQuIAogKi8KY29uc3QgbW9tZW50ID0gcmVxdWlyZSgnbW9tZW50Jyk7Cgpjb25zdCBVTkNBVEhFR09SSVNFRF9UWVBFX05BTUUgPSAnVW5jYXRlZ29yaXNlZCc7CmNvbnN0IFVOQ0FUSEVHT1JJU0VEX1RZUEVfQ09MT1IgPSAncHVycGxlJzsgIApjb25zdCBCQVJfQ0hBUlRfTEVOR1RIID0gMTA7ICAKCi8qKgogKiBBIGNsYXNzIGhvbGRpbmcgdGhlIGluZm8gZm9yIHRoZSBmdWxsIHJlcG9ydCByZXNwb25zZQogKi8KY2xhc3MgUmVwb3J0UmVzdWx0IHsKICAgIGNvbnN0cnVjdG9yKHN0YXJ0RGF0ZSwgZW5kRGF0ZSwgdG90YWwsIHR5cGVzLCByZWNlaXB0cywgaGFzRGF0YSkgewogICAgICAgIHRoaXMuc3RhcnREYXRlID0gc3RhcnREYXRlOyAgICAgICAgCiAgICAgICAgdGhpcy5lbmREYXRlID0gZW5kRGF0ZTsKICAgICAgICB0aGlzLnRvdGFsID0gdG90YWw7CiAgICAgICAgdGhpcy50eXBlcyA9IHR5cGVzOwogICAgICAgIHRoaXMucmVjZWlwdHMgPSByZWNlaXB0czsKICAgICAgICB0aGlzLmhhc0RhdGEgPSBoYXNEYXRhOwogICAgfQp9CgovKioKICogQSBjbGFzcyBob2xkaW5nIHRoZSBpbmZvIGZvciBhIHNpbmdsZSByZWNlaXB0IGdvaW5nIGluIHRvIHRoZSByZXBvcnQKICovCmNsYXNzIFJlY2VpcHRJbmZvIHsKICAgIGNvbnN0cnVjdG9yKGFsaWFzLCBhbW91bnQsIGRhdGUsIHR5cGUsIGJ1c2luZXNzLCBpc0ludm9pY2UsIHR5cGVDb2xvcikgewogICAgICAgIHRoaXMuYWxpYXMgPSBhbGlhczsgICAgICAgIAogICAgICAgIHRoaXMuYW1vdW50ID0gYW1vdW50OwogICAgICAgIHRoaXMuZGF0ZSA9IGRhdGU7CiAgICAgICAgdGhpcy50eXBlID0gdHlwZTsgICAgICAgIAogICAgICAgIHRoaXMuYnVzaW5lc3MgPSBidXNpbmVzczsKICAgICAgICB0aGlzLmlzSW52b2ljZSA9IGlzSW52b2ljZTsKICAgICAgICB0aGlzLnR5cGVDb2xvciA9IHR5cGVDb2xvcjsKICAgIH0KfQoKLyoqCiAqIEEgY2xhc3MgaG9sZGluZyBhIHN1bW1hcnkgb2YgaW5mbyBuZWVkZWQgZm9yIHRoZSByZXBvcnQgZm9yIGEgdHlwZSBvZiByZWNlaXB0cwogKi8KY2xhc3MgVHlwZVN1bW1hcnkgewogICAgY29uc3RydWN0b3IodGl0bGUsIHN1YnRvdGFsLCBiYXJzLCBudW1SZWNlaXB0cywgdHlwZUNvbG9yKSB7CiAgICAgICAgdGhpcy50aXRsZSA9IHRpdGxlOyAgICAgICAgCiAgICAgICAgdGhpcy5zdWJ0b3RhbCA9IHN1YnRvdGFsOwogICAgICAgIHRoaXMuYmFycyA9IGJhcnM7CiAgICAgICAgdGhpcy5udW1SZWNlaXB0cyA9IG51bVJlY2VpcHRzOwogICAgICAgIHRoaXMudHlwZUNvbG9yID0gdHlwZUNvbG9yOwogICAgfQp9CgpnZW5lcmF0ZVJlcG9ydCgpOwoKYXN5bmMgZnVuY3Rpb24gZ2VuZXJhdGVSZXBvcnQoKSB7CiAgICBjb25zdCBzdGFydERhdGUgPSBmb3JtYXREYXRlKHN0cnlrZS5kYXRhLnJlY29yZC5zdGFydGRhdGUpOwogICAgY29uc3QgZW5kRGF0ZSA9IGZvcm1hdERhdGUoc3RyeWtlLmRhdGEucmVjb3JkLmVuZGRhdGUpOwogICAgY29uc29sZS5sb2coYHJlcG9ydCBmcm9tOiAke3N0YXJ0RGF0ZX0gdW50aWw6ICR7ZW5kRGF0ZX1gKTsKCiAgICBjb25zdCByZXBvcnQgPSBhd2FpdCBidWlsZFJlcG9ydERhdGEoc3RhcnREYXRlLCBlbmREYXRlKTsgICAgCgogICAgdHJ5IHsKICAgICAgICAvLyB1cGRhdGUgdGhlIHRvdGFsIGZpZWxkIG9uIHRoZSByZXBvcnQgcmVjb3JkCiAgICAgICAgYXdhaXQgc3RyeWtlLnVwZGF0ZShzdHJ5a2UuZGF0YS5yZWNvcmQuaWQsIHsgdG90YWwgOiBwYXJzZUZsb2F0KHJlcG9ydC50b3RhbCkgfSk7ICAgICAgICAgICAgICAKICAgICAgICAvLyByZXR1cm4gdGhlIHJlcG9ydCBkYXRhCiAgICAgICAgc3RyeWtlLnJlc29sdmUocmVwb3J0KTsKICAgIH0KICAgIGNhdGNoIChlcnIpIHsKICAgICAgICBjb25zb2xlLmVycm9yKGVyci5tZXNzYWdlKTsKICAgICAgICBzdHJ5a2UuZXJyb3IoJ0FuIGVycm9yIG9jY3VycmVkIHRyeWluZyB0byB1cGRhdGUgdGhlIHRvdGFsIGFtb3VudCBvZiB0aGlzIHJlcG9ydCByZWNvcmQuJyk7CiAgICB9Cn0KCmFzeW5jIGZ1bmN0aW9uIGJ1aWxkUmVwb3J0RGF0YShzdGFydERhdGUsIGVuZERhdGUpIHsKCiAgICBsZXQgcmVwb3J0RG9jID0gbmV3IFJlcG9ydFJlc3VsdChzdGFydERhdGUsIGVuZERhdGUsIDAsIG51bGwsIG51bGwsIGZhbHNlKTsKICAgIAogICAgdHJ5IHsKICAgICAgICAvLyAxLiBnZXQgdGhlIHJlY2VpcHRzIGZvciB0aGlzIHJlcG9ydAogICAgICAgIGNvbnN0IHJlY2VwaXRzRm9yUmVwb3J0ID0gYXdhaXQgc3RyeWtlLmZpbmQoYHsgCiAgICAgICAgICAgIFJlY2VpcHQgKGZpbHRlciA6IHsKICAgICAgICAgICAgICAgIHJlY2VpcHREYXRlIDogeyBndCA6ICIke3N0YXJ0RGF0ZX0iLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbHQgOiAiJHtlbmREYXRlfSJ9ICAgICAgICAKICAgICAgICAgICAgfSkgCiAgICAgICAgICAgIHsgCiAgICAgICAgICAgICAgICBhbGlhcywgCiAgICAgICAgICAgICAgICBhbW91bnQsIAogICAgICAgICAgICAgICAgcmVjZWlwdERhdGUsCiAgICAgICAgICAgICAgICB0eXBlIHsgbmFtZSwgY29sb3IgfQogICAgICAgICAgICAgICAgYnVzaW5lc3MgeyBuYW1lIH0KICAgICAgICAgICAgICAgIGlzSW52b2ljZSAKICAgICAgICAgICAgfQogICAgICAgIH1gKTsKICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgaWYgKHJlY2VwaXRzRm9yUmVwb3J0ICYmIHJlY2VwaXRzRm9yUmVwb3J0Lmxlbmd0aCA+IDApIHsKICAgICAgICAgICAgbGV0IHRvdGFsID0gMDsKICAgICAgICAgICAgY29uc3QgcmVjZWlwdHMgPSBuZXcgQXJyYXkoKTsKICAgICAgICAgICAgY29uc3QgdHlwZXMgPSBuZXcgTWFwKCk7CiAgICAgICAgICAgIC8vIDIuIGJ1aWxkIHRoZSBkYXRhIGZvciB0aGUgcmVwb3J0CiAgICAgICAgICAgIHJlY2VwaXRzRm9yUmVwb3J0LmZvckVhY2goKHJlY2VpcHQpID0+IHsKICAgICAgICAgICAgICAgIGNvbnN0IHR5cGVOYW1lID0gcmVjZWlwdC50eXBlID8gcmVjZWlwdC50eXBlLm5hbWUgOiBVTkNBVEhFR09SSVNFRF9UWVBFX05BTUU7CiAgICAgICAgICAgICAgICBjb25zdCB0eXBlQ29sb3IgPSByZWNlaXB0LnR5cGUgPyByZWNlaXB0LnR5cGUuY29sb3IgOiBVTkNBVEhFR09SSVNFRF9UWVBFX0NPTE9SOyAgICAgICAgCiAgICAgICAgICAgICAgICBjb25zdCBidXNpbmVzc05hbWUgPSByZWNlaXB0LmJ1c2luZXNzID8gcmVjZWlwdC5idXNpbmVzcy5uYW1lIDogJyc7ICAgICAgICAgICAgICAgIAoKICAgICAgICAgICAgICAgIGJ1aWxkVHlwZVN1bW1hcnkodHlwZXMsIHR5cGVOYW1lLCB0eXBlQ29sb3IsIHJlY2VpcHQpOwoKICAgICAgICAgICAgICAgIHJlY2VpcHRzLnB1c2goYnVpbGRSZWNlaXB0c0RhdGEodHlwZU5hbWUsIGJ1c2luZXNzTmFtZSwgdHlwZUNvbG9yLCByZWNlaXB0KSk7ICAgICAgICAKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgdG90YWwgKz0gcmVjZWlwdC5hbW91bnQ7CiAgICAgICAgICAgIH0pOwogICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICBpZiAodG90YWwpIHsKICAgICAgICAgICAgICAgIHRvdGFsID0gZm9ybWF0QW1vdW50KHRvdGFsKTsKICAgICAgICAgICAgfQogICAgICAgIAogICAgICAgICAgICAvLyAzLiBidWlsZCB0aGUgZGF0YSBmb3IgdGhlIGJhciBjaGFydAogICAgICAgICAgICBidWlsZFR5cGVzQ2hhcnREYXRhKHR5cGVzLCB0b3RhbCk7CiAgICAgICAgCiAgICAgICAgICAgIC8vIDQuIGNyZWF0ZSB0aGUgcmVwb3J0IG9iamVjdAogICAgICAgICAgICByZXBvcnREb2MgPSBuZXcgUmVwb3J0UmVzdWx0KHN0YXJ0RGF0ZSwgZW5kRGF0ZSwgdG90YWwsIEFycmF5LmZyb20odHlwZXMudmFsdWVzKCkpLCByZWNlaXB0cywgdHJ1ZSk7ICAgICAgICAgICAgCiAgICAgICAgfQoKICAgIH0gY2F0Y2ggKGVycikgewogICAgICAgIGNvbnNvbGUuZXJyb3IoZXJyLm1lc3NhZ2UpOwogICAgICAgIHN0cnlrZS5lcnJvcignQW4gZXJyb3Igb2NjdXJyZWQgdHJ5aW5nIHRvIHJldHJpZXZlIHRoZSBkYXRhIG5lZWRlZCB0byBidWlsZCB0aGlzIHJlcG9ydC4nKTsKICAgIH0KICAgIAogICAgcmV0dXJuIHJlcG9ydERvYzsKfQoKZnVuY3Rpb24gYnVpbGRUeXBlU3VtbWFyeSh0eXBlcywgdHlwZU5hbWUsIHR5cGVDb2xvciwgcmVjZWlwdCkgewogICAgbGV0IHR5cGVTdW1tYXJ5ID0gdHlwZXMuZ2V0KHR5cGVOYW1lKTsKCiAgICBpZiAodHlwZVN1bW1hcnkpIHsKICAgICAgICB0eXBlU3VtbWFyeS5zdWJ0b3RhbCA9IGZvcm1hdEFtb3VudCh0eXBlU3VtbWFyeS5zdWJ0b3RhbCArIHJlY2VpcHQuYW1vdW50KTsgICAgCiAgICAgICAgdHlwZXMuc2V0KHR5cGVOYW1lLCB0eXBlU3VtbWFyeSk7CiAgICB9IGVsc2UgewogICAgICAgIHR5cGVTdW1tYXJ5ID0gbmV3IFR5cGVTdW1tYXJ5KHR5cGVOYW1lLCBOdW1iZXIocmVjZWlwdC5hbW91bnQpLCBbIDEgXSwgMSwgdHlwZUNvbG9yKTsKICAgICAgICB0eXBlcy5zZXQodHlwZU5hbWUsIHR5cGVTdW1tYXJ5KTsKICAgIH0KCiAgICByZXR1cm4gdHlwZXM7Cn0KCmZ1bmN0aW9uIGJ1aWxkVHlwZXNDaGFydERhdGEodHlwZXMsIHRvdGFsKSB7CiAgICAvLyBidWlsZCBhcnJheXMgdGhhdCByZXByZXNlbnQgZWFjaCBiYXIgaW4gdGhlIHJlcG9ydCdzIGJhciBjaGFydAogICAgdHlwZXMuZm9yRWFjaCgodHlwZSkgPT4gewogICAgICAgIC8vIG9uZSBlbnRyeSBpbiB0aGUgYXJyYXkgcmVwcmVzZW50cyBvbmUgdW50aSBpbiB0aGUgYmFyLCAKICAgICAgICAvLyBpdCBzaG91bGQgYmUgcHJvcG9ydGluYWwgdG8gdGhlIHN1YnRvdGFsIG9mIHRoYXQgdHlwZSBhZ2FpbnN0IHRoZSBncmFuZCB0b3RhbCBvZiB0aGUgcmVwb3J0CiAgICAgICAgY29uc3QgbGVuID0gTWF0aC5yb3VuZCgoKHR5cGUuc3VidG90YWwgLyB0b3RhbCkgKiBCQVJfQ0hBUlRfTEVOR1RIKSk7ICAgICAgCiAgICAgICAgdHlwZS5iYXJzID0gbmV3IEFycmF5KGxlbikuZmlsbCgxKTsgICAgICAgICAgCiAgICB9KTsKfQoKZnVuY3Rpb24gYnVpbGRSZWNlaXB0c0RhdGEodHlwZU5hbWUsIGJ1c2luZXNzTmFtZSwgdHlwZUNvbG9yLCByZWNlaXB0KSB7ICAgIAoKICAgIGNvbnN0IGlzSW52b2ljZSA9IHJlY2VpcHQuaXNJbnZvaWNlID8gJ3llcycgOiBudWxsOyAgICAKICAgIHJldHVybiBuZXcgUmVjZWlwdEluZm8ocmVjZWlwdC5hbGlhcywgcmVjZWlwdC5hbW91bnQsIGZvcm1hdERhdGVXaXRoVGltZShyZWNlaXB0LnJlY2VpcHREYXRlKSwgdHlwZU5hbWUsIGJ1c2luZXNzTmFtZSwgaXNJbnZvaWNlLCB0eXBlQ29sb3IpOwp9CgpmdW5jdGlvbiBmb3JtYXREYXRlKGlzb0RhdGUpIHsKICAgIGNvbnN0IG1EYXRlID0gbW9tZW50KGlzb0RhdGUpOwogICAgcmV0dXJuIG1EYXRlLmZvcm1hdCgnWVlZWS1NTS1ERCcpOwp9CgpmdW5jdGlvbiBmb3JtYXREYXRlV2l0aFRpbWUoaXNvRGF0ZSkgewogICAgY29uc3QgbURhdGUgPSBtb21lbnQoaXNvRGF0ZSk7CiAgICByZXR1cm4gbURhdGUuZm9ybWF0KCdZWVlZLU1NLUREIGhoOm1tJyk7Cn0KCmZ1bmN0aW9uIGZvcm1hdEFtb3VudChhbW91bnQpIHsKICAgIC8vIHJvdW5kIHRvIDIgZGVjaW1hbCBwbGFjZXMKICAgIHJldHVybiBNYXRoLnJvdW5kKChhbW91bnQgKyBOdW1iZXIuRVBTSUxPTikgKiAxMDApIC8gMTAwCn0="
+        },
+        "typeBeforeCreate": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordBefore",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordBefore",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordAfter",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordAfter",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "typeBeforeCreate",
+            "scriptResultDefinition": {
+                "returnType": "object",
+                "returnValueName": null
+            },
+            "scriptSource": "Ci8qKgogKiBUeXBlIGJlZm9yZSBjcmVhdGUgdHJpZ2dlci4KICogLSBzZXRzIGFsaWFzIHRvIHVwcGVyY2FzZSBuYW1lCiAqLwovLyBjcmVhdGUgYSBjb3B5IG9mIHRoZSByZWNvcmQgc28gdGhhdCBpdCBjYW4gYmUgbW9kaWZpZWQgZGlyZWN0bHkuIApsZXQgbmV3VHlwZSA9IEpTT04ucGFyc2UoSlNPTi5zdHJpbmdpZnkoc3RyeWtlLmRhdGEucmVjb3JkQWZ0ZXIpKTsKCm5ld1R5cGUuYWxpYXMgPSBuZXdCdXNpbmVzcy5uYW1lLnRvVXBwZXJDYXNlKCkucmVwbGFjZSgvXHMvZywnJyk7CgpzdHJ5a2UucmVzb2x2ZShuZXdUeXBlKTsK"
+        },
+        "validateReceipt": {
+            "scriptArguments": [
+                {
+                    "argumentName": "user",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "userInfo",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordBefore",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordBefore",
+                    "argumentType": "object"
+                },
+                {
+                    "argumentName": "recordAfter",
+                    "argumentSourceDefinition": null,
+                    "argumentSourceType": "recordAfter",
+                    "argumentType": "object"
+                }
+            ],
+            "scriptLanguage": "js",
+            "scriptName": "validateReceipt",
+            "scriptResultDefinition": {
+                "returnType": "object",
+                "returnValueName": null
+            },
+            "scriptSource": "LyoqCiAqIFJlY2VpcHRzIGJlZm9yZSBjcmVhdGUgdHJpZ2dlci4KICogLSB2YWxpZGF0ZXMgdGhhdCBpbnZvaWNlcyBoYXZlIGEgcmVsYXRlZCBidXNpbmVzcy4gSWYgbm90IGl0IHdpbGwgbm90IGFsbG93IGNyZWF0aW5nIHRoZSByZWNvcmQuCiAqLwppZiAoc3RyeWtlLmRhdGEucmVjb3JkQWZ0ZXIuaXNJbnZvaWNlICYmICFzdHJ5a2UuZGF0YS5yZWNvcmRBZnRlci5idXNpbmVzcykgewogICAgc3RyeWtlLmVycm9yKCdJZiB0aGUgcmVjZWlwdCBpcyBhbiBpbnZvaWNlLCBpdCBtdXN0IGhhdmUgdGhlIGJ1c2luZXNzIHNldC4nKTsgICAgCn0KCnN0cnlrZS5yZXNvbHZlKHN0cnlrZS5kYXRhLnJlY29yZEFmdGVyKTs="
+        }
+    },
+    "userRoles": {
+        "admin": {
+            "name": "admin"
+        },
+        "user": {
+            "name": "user"
+        }
+    }
+}

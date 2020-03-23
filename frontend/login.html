@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />    
+    <meta name="description" content="Login to your receipts app" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />   
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/stryke.js"></script>   
+  </head>
+  <body>
+    <div class="row login-wrap">
+      <div class="col-sm-4 h-10">        
+      </div>    
+      <div class="col-sm-4 my-auto">
+        <div class="card card-block">
+          <div class="card-header text-center">
+            <h1>
+                My Receipts
+              </h1>
+          </div>
+          <div class="card-body">    
+            <div class="loginTextDiv">
+              <span class="loginText">Login to create receipts fast!</span>
+            </div>
+            <form class="loginForm">
+              
+              <div class="form-group">                
+                <input type="text" placeholder="username" class="loginInput form-control" id="username" />
+              </div>
+              <div class="form-group">                
+                <input type="password" placeholder="password" class="loginInput form-control" id="password" />
+              </div>
+
+              <div class="loginBtnHolder">
+                <button id="login" class="loginBtn btn btn-success" type="button">                
+                  Login
+                </button>
+              </div>               
+            </form>
+
+            <p id="errorMsg"></p>
+          </div>
+          <div class="col-sm-4 h-10">        
+          </div>    
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script>
+      window.jQuery ||
+        document.write(
+          '<script src="js/vendor/jquery-1.12.0.min.js"><\/script>'
+        );
+    </script>
+    <script src="js/auth.js"></script>   
+  </body>
+</html>

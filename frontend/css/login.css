@@ -1,0 +1,47 @@
+.loginBtnHolder{ 
+  text-align: center; 
+}
+
+.loginBtn {
+  width: 180px;  
+  margin-top: 30px;
+  background-color: #34d18b !important;
+  border-radius: 25px  !important;
+}
+
+.loginInput {
+  margin-top: 30px;
+  border-radius: 25px  !important;  
+}
+
+.loginForm {
+  margin-top: 30px;
+}
+
+.card {
+  margin-top: 30px;
+}
+
+.loginText {
+  color: grey;
+  font-style: italic;
+}
+
+.loginTextDiv {
+  text-align: center;
+}
+
+body {
+  background-color: #5f5a96 !important;
+}
+
+h1 {
+  font-style: italic;
+}
+
+#errorMsg {
+  font-style: bolt;
+  color: red;
+  margin-top: 20px;
+  text-align: center;
+}

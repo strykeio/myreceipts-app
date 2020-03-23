@@ -1,0 +1,79 @@
+@media only screen and (max-device-height: 700) {
+  .card {
+    margin-top: 5px;
+    width: 100%;
+  }
+}
+@media only screen and (min-device-height: 701px) {
+  .card {
+    margin-top: 30px;
+  }
+}
+
+.notes {
+    resize: none;
+}
+
+.saveBtnHolder{ 
+  text-align: center; 
+}
+
+.fa-power-off {
+  float: right;
+  cursor: pointer;
+}
+
+.saveBtn {  
+  width: 180px;  
+  margin-top: 30px;
+  background-color: #34d18b !important;
+  border-radius: 25px  !important;
+}
+
+#save{
+  margin-top: 30px;
+}
+
+.formInput {
+  margin-top: 30px;
+  border-radius: 25px  !important;  
+}
+
+.form-control {}  
+  border-radius: 25px  !important;  
+}
+
+.columnCard { 
+  min-width: 400px !important;
+}
+
+.infoText {
+  color: grey;
+  font-style: italic;
+}
+
+.title {
+  font-style: italic;
+}
+
+.infoTextDiv {
+  text-align: center;
+}
+
+body {
+  background-color: #5f5a96 !important;
+}
+
+h1 {
+  font-style: italic;
+}
+
+.inputForm {
+  margin-top: 30px;
+}
+
+#feedback {
+  font-style: bolt;
+  color: red;
+  margin-top: 20px;
+}
